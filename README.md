@@ -3,7 +3,9 @@ Docker compose с nginx, php, mysql. Допом ставится composer, xdebu
 проектов на локалке. Если скорректировать настройки, то и для прода. 
 
 # Запуск
-docker compose up -d  
++ docker compose up -d  
++ будет доступно на localhost:81
+
 
 # Остановка и удаление
-docker compose down 
++ docker compose down 
