@@ -1,0 +1,40 @@
+services:
+  #nginx
+  web:
+      build:
+        dockerfile: ./nginx/Dockerfile
+      ports:
+        - "81:80"
+      volumes:
+        - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+  #php
+  app:
+    build:
+      dockerfile: ./php/Dockerfile
+    volumes:
+      - /var/www/html/vendor # the folder is not overwritten
+      - ./app:/var/www/html
+      - ./php/conf.d/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+    extra_hosts:
+      - host.docker.internal:host-gateway # for xdebug
+    environment: # see file .env
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_PORT: ${MYSQL_PORT}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+  #mysql
+  db:
+    image: mysql:8.0
+    volumes:
+      - mysqldata:/var/lib/mysql
+    restart: unless-stopped # similar to always, it is not restarted even after Docker daemon restarts
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+volumes:
+  mysqldata:

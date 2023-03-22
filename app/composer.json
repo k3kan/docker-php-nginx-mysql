@@ -1,0 +1,17 @@
+{
+  "name": "k3kan/docker-example",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "k3kan",
+      "email": "aintbor@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.0",
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*"
+  }
+}
